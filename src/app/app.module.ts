@@ -8,11 +8,11 @@ import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app.routing'
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyDSzolJxhikyA4mP5W4-YvUitlS1kxQDPg",
-    authDomain: "indigo-fa29a.firebaseapp.com",
-    databaseURL: "https://indigo-fa29a.firebaseio.com",
-    storageBucket: "indigo-fa29a.appspot.com",
-    messagingSenderId: "637180864709"
+    apiKey: "AIzaSyCfFalSuI7lcZZy0AMPZGPWYw1NGXPT4Us",
+    authDomain: "blog-ref.firebaseapp.com",
+    databaseURL: "https://blog-ref.firebaseio.com",
+    storageBucket: "blog-ref.appspot.com",
+    messagingSenderId: "43149645678"
   };
 
 export const firebaseAuthConfig = {
