@@ -69,7 +69,7 @@ export class PhotoComponent {
             let path = `/${this.folder}/${selectedFile.name}`;
             var iRef = storageRef.child(path);
             iRef.put(selectedFile).then((snapshot) => {
-                console.log('Uploaded a blob or file! Now storing the reference at',`/master//`);
+                console.log('Uploaded a blob or file! Now storing the reference at',`/master/`);
                 af.database.list(`/master`).push({ path: path, filename: selectedFile.name })
             });
         }
