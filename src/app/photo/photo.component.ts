@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy, } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-
 import { Observable } from 'rxjs';
 
 declare var firebase: any;
@@ -27,13 +26,26 @@ export class PhotoComponent {
 
     @Input() folder: string;
     
-    fileList : FirebaseListObservable<Image[]>;
-    imageList : Observable<Image[]>;
+    masters: FirebaseListObservable<any[]>;
+    fileList : FirebaseListObservable<any[]>;
+    imageList : Observable<any[]>;
 
     constructor(public af: AngularFire, public router: Router) {
+          this.masters = af.database.list('/master');
+
+        //   this.masters = af.database.list('/master', { preserveSnapshot: true });
+        //     this.masters
+        //     .subscribe(snapshots => {
+        //         snapshots.forEach(snapshot => {
+        //         console.log(snapshot.key)
+        //         console.log(snapshot.val())
+        //         });
+        //     })
+
+          
     }
     ngOnInit() {
-            console.log('This if the value for user-id: ' + this.folder);
+
     }
 
     ngOnChanges() {
@@ -70,7 +82,7 @@ export class PhotoComponent {
             var iRef = storageRef.child(path);
             iRef.put(selectedFile).then((snapshot) => {
                 console.log('Uploaded a blob or file! Now storing the reference at',`/master/`);
-                af.database.list(`/master`).push({ path: path, filename: selectedFile.name })
+                af.database.list(`/master`).push({ path: path, filename2: selectedFile.name })
             });
         }
         
