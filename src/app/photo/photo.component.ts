@@ -47,16 +47,7 @@ export class PhotoComponent {
                console.log("new values for folder");
         let storage = firebase.storage();
         
-        this.fileList = this.af.database.list(`/${this.folder}/images`);
-        console.log("Rendering all images in ",`/${this.folder}/images`)
-        this.imageList = this.fileList.map( itemList =>
-            itemList.map( item => {
-                var pathReference = storage.ref(item.path);
-                let result = {$key: item.$key, downloadURL: pathReference.getDownloadURL(), path: item.path, filename: item.filename};
-                console.log(result);
-                return result;
-            })
-        );
+
     }
     
     ngDoCheck() {
@@ -104,6 +95,7 @@ export class PhotoComponent {
                 return result;
             })
         );
+
  }
 
 
