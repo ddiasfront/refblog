@@ -34,30 +34,15 @@ export class BlogPostNewComponent {
 
     }
     ngOnInit(){
+        
     this.items = this.af.database.list('posts');
     console.log('i am here')
      
     }
 
       upload() {
-        // Create a root reference
-        let storageRef = firebase.storage().ref();
 
-        let success = false;
-        // This currently only grabs item 0, TODO refactor it to grab them all
-        for (let selectedFile of [(<HTMLInputElement>document.getElementById('file')).files[0]]) {
-            console.log(selectedFile);
-            // Make local copies of services because "this" will be clobbered
-            let router = this.router;
-            let af = this.af;
-            let folder = this.folder;
-            let path = `/${this.folder}/${selectedFile.name}`;
-            var iRef = storageRef.child(path);
-            iRef.put(selectedFile).then((snapshot) => {
-                console.log('Uploaded a blob or file! Now storing the reference at',`/${this.folder}/images/`);
-                af.database.list(`/${folder}/images/`).push({ path: path, filename: selectedFile.name })
-            });
-        }
+      
         
     }
 
@@ -65,8 +50,8 @@ export class BlogPostNewComponent {
        console.log("new values for folder");
         let storage = firebase.storage();
         
-        this.uploadfile = this.af.database.list(`/${this.folder}/images`);
-        console.log("Rendering all images in ",`/${this.folder}/images`)
+        this.uploadfile = this.af.database.list(`/posts/images`);
+        console.log("Rendering all images in ",`/posts/images`)
         this.imageList = this.uploadfile.map( itemList =>
             itemList.map( item => {
                 var pathReference = storage.ref(item.path);
@@ -79,7 +64,7 @@ export class BlogPostNewComponent {
 
        delete(image: Image) {
         let storagePath = image.path;
-        let referencePath = `${this.folder}/images/` + image.$key;
+        let referencePath = `posts/images/` + image.$key;
 
         // Do these as two separate steps so you can still try delete ref if file no longer exists
 
@@ -98,8 +83,32 @@ export class BlogPostNewComponent {
     }
 
     add():void{
-        this.items.push({title:this.title,article:this.article})
-        this.router.navigateByUrl('/blog/posts');
+
+             this.items = this.af.database.list('posts');
+           this.router.navigateByUrl('/blog/posts');
+
+
+
+        // Create a root reference
+        let storageRef = firebase.storage().ref();
+
+        let success = false;
+        // This currently only grabs item 0, TODO refactor it to grab them all
+        for (let selectedFile of [(<HTMLInputElement>document.getElementById('file')).files[0]]) {
+            console.log(selectedFile);
+            // Make local copies of services because "this" will be clobbered
+            let router = this.router;
+            let af = this.af;
+            let folder = this.folder;
+            let path = `/posts/images/${selectedFile.name}`;
+            var iRef = storageRef.child(path);
+            iRef.put(selectedFile).then((snapshot) => {
+                console.log('Uploaded a blob or file! Now storing the reference at',`/posts/images/`);
+                af.database.list(`posts`).push({ path: path, filename: selectedFile.name, title:this.title,article:this.article})
+            });
+       
+
+        }
     }
      keyupHandlerFunction(content:any):void{
     this.article=content;
